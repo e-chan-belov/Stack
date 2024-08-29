@@ -3,10 +3,10 @@
 
 int main(int argc, const char * argv[]) {
     Stack<int> A(4);
-    A[0] = 3;
-    A[1] = 4;
-    A[2] = 5;
-    A[3] = 6;
+    A[0] = 0;
+    A[1] = 1;
+    A[2] = 2;
+    A[3] = 3;
     
     
     std::cout << A[0] << " " << A[1] << std::endl;
@@ -15,6 +15,7 @@ int main(int argc, const char * argv[]) {
     
     std::cout << B[2] << " " << B[3] << std::endl;
     
-    std::cout << A.pop(1) << std::endl;
+    std::cout << B.add(10) << std::endl;
+    
     return 0;
 }
