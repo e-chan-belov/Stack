@@ -15,7 +15,9 @@ int main(int argc, const char * argv[]) {
     
     std::cout << B[2] << " " << B[3] << std::endl;
     
-    std::cout << B.add(10) << std::endl;
+    std::cout << B.pop(1) << std::endl;
+    
+    std::cout << B.size() << std::endl;
     
     return 0;
 }

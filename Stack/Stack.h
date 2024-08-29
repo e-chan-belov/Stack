@@ -24,35 +24,37 @@ public:
     T push(T element);
     T add(T element);
     
+    int size() const;
+    
 };
 
 template <class T>
 T& Stack<T>::operator[](int i) {
-    if (i < 0) {}
+    if (i < 0) { throw "Negative position!"; }
     
     Zone<T> *cur = root;
     for (int j = 0; j < i; j++) {
         cur = cur->next;
-        if (cur == NULL) {}
+        if (cur == NULL) { throw "Out of range!"; }
     }
     return cur->memory;
 }
 
 template <class T>
 const T Stack<T>::operator[](int i) const {
-    if (i < 0) {}
+    if (i < 0) { throw "Negative position!"; }
     
     Zone<T> *cur = root;
     for (int j = 0; j < i; j++) {
         cur = cur->next;
-        if (cur == NULL) {}
+        if (cur == NULL) { throw "Out of range!"; }
     }
     return cur->memory;
 }
 
 template <class T>
 Stack<T>::Stack(int size) {
-    if (size < 1) { }
+    if (size < 1) { throw "Impossible size!"; }
     
     root = new Zone<T>;
     Zone<T> *cur = root;
@@ -68,13 +70,14 @@ Stack<T>::Stack(const Stack &copy) {
     root = new Zone<T>;
     Zone<T> *cur = root;
     Zone<T> *cur_copy = copy.root;
-    while (cur_copy != NULL) {
+    while (cur_copy->next != NULL) {
         cur->memory = cur_copy->memory;
         cur->next = new Zone<T>;
         cur_copy = cur_copy->next;
         cur = cur->next;
     }
     cur->next = NULL;
+    cur->memory = cur_copy->memory;
 }
 
 template <class T>
@@ -132,7 +135,18 @@ T Stack<T>::add(T element) {
     }
     cur->next = new Zone<T>;
     cur->next->next = NULL;
-    return cur->memory = element;
+    return cur->next->memory = element;
+}
+
+template <class T>
+int Stack<T>::size() const {
+    int i = 0;
+    const Zone<T> *cur = root;
+    while (cur != NULL) {
+        i++;
+        cur = cur->next;
+    }
+    return i;
 }
 
 #endif /* Stack_h */
