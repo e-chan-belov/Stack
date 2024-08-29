@@ -15,5 +15,6 @@ int main(int argc, const char * argv[]) {
     
     std::cout << B[2] << " " << B[3] << std::endl;
     
+    std::cout << A.pop(1) << std::endl;
     return 0;
 }

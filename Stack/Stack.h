@@ -21,6 +21,7 @@ public:
     Stack(const Stack &copy);
     ~Stack();
     
+    T pop(int i);
     
 };
 
@@ -83,9 +84,36 @@ Stack<T>::~Stack() {
     Zone<T> *next = root->next;
     for (int _ = 1; _ < size; _++) {
         delete cur;
-        cur = next;
-        next = next->next;
+        if (next != NULL) {
+            cur = next;
+            next = next->next;
+        }
     }
+}
+
+template <class T>
+T Stack<T>::pop(int i) {
+    if (i < 0) {}
+    if (i >= size) {}
+    
+    Zone<T> *cur = root;
+    
+    if (i == 0) {
+        root = cur->next;
+        T ret = cur->memory;
+        delete cur;
+        return ret;
+    }
+    
+    for (int j = 0; j < i - 1; j++) {
+        cur = cur->next;
+    }
+    Zone<T> *next = cur->next->next;
+    T ret = cur->next->memory;
+    delete cur->next;
+    cur->next = next;
+    size--;
+    return ret;
 }
 
 #endif /* Stack_h */
