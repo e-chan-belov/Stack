@@ -14,21 +14,78 @@ private:
     int size;
     Zone<T> *root;
 public:
+    T& operator[](int i);
+    const T operator[](int i) const;
+    
     Stack(int size_ = 1);
+    Stack(const Stack &copy);
+    ~Stack();
+    
     
 };
 
 template <class T>
-Stack<T>::Stack(int size_) : size(size_)  {
+T& Stack<T>::operator[](int i) {
+    if (i < 0) {}
+    if (i >= size) {}
+    
+    Zone<T> *cur = root;
+    for (int j = 0; j < i; j++) {
+        cur = cur->next;
+    }
+    return cur->memory;
+}
+
+template <class T>
+const T Stack<T>::operator[](int i) const {
+    if (i < 0) {}
+    if (i >= size) {}
+    
+    Zone<T> *cur = root;
+    for (int j = 0; j < i; j++) {
+        cur = cur->next;
+    }
+    return cur->memory;
+}
+
+template <class T>
+Stack<T>::Stack(int size_) {
     if (size_ < 1) { }
+    size = size_;
+    
     root = new Zone<T>;
     Zone<T> *cur = root;
-    for (int i = 1; i < size; i++) {
+    for (int _ = 1; _ < size; _++) {
         cur->next = new Zone<T>;
         cur = cur->next;
     }
     cur->next = NULL;
 }
 
+template <class T>
+Stack<T>::Stack(const Stack &copy) {
+    size = copy.size;
+    
+    root = new Zone<T>;
+    Zone<T> *cur = root;
+    for (int i = 1; i < size; i++) {
+        cur->next = new Zone<T>;
+        cur->memory = copy[i - 1];
+        cur = cur->next;
+    }
+    cur->next = NULL;
+    cur->memory = copy[size - 1];
+}
+
+template <class T>
+Stack<T>::~Stack() {
+    Zone<T> *cur = root;
+    Zone<T> *next = root->next;
+    for (int _ = 1; _ < size; _++) {
+        delete cur;
+        cur = next;
+        next = next->next;
+    }
+}
 
 #endif /* Stack_h */
